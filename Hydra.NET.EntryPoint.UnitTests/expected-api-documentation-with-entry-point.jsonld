@@ -1,0 +1,153 @@
+{
+  "@context": {
+    "sh": "http://www.w3.org/ns/shacl#",
+    "hydra": "https://www.w3.org/ns/hydra/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "ApiDocumentation": "hydra:ApiDocumentation",
+    "Class": "hydra:Class",
+    "Collection": "hydra:Collection",
+    "description": "hydra:description",
+    "extension": "hydra:extension",
+    "in": "sh:in",
+    "memberAssertion": "hydra:memberAssertion",
+    "NodeShape": "sh:NodeShape",
+    "object": "hydra:object",
+    "Operation": "hydra:Operation",
+    "path": "sh:path",
+    "property": "hydra:property",
+    "propertyShape": "sh:property",
+    "PropertyShape": "sh:PropertyShape",
+    "range": "rdfs:range",
+    "readable": "hydra:readable",
+    "required": "hydra:required",
+    "supportedClass": "hydra:supportedClass",
+    "supportedOperation": "hydra:supportedOperation",
+    "supportedProperty": "hydra:supportedProperty",
+    "SupportedProperty": "hydra:SupportedProperty",
+    "targetClass": "sh:targetClass",
+    "title": "hydra:title",
+    "writable": "hydra:writable",
+    "doc": "https://api.example.com/doc#"
+  },
+  "@id": "https://api.example.com/doc",
+  "@type": "ApiDocumentation",
+  "entrypoint": "https://api.example.com/",
+  "extension": "http://www.w3.org/ns/shacl#",
+  "supportedClass": [
+    {
+      "@id": "doc:EntryPoint",
+      "@type": "Class",
+      "supportedProperty": [
+        {
+          "@type": "SupportedProperty",
+          "title": "Collections",
+          "description": "Lists links to initial collections on which a client can operate.",
+          "required": true,
+          "readable": true,
+          "writable": false,
+          "property": {
+            "@id": "doc:EntryPoint/collection",
+            "range": "Link"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "doc:Stock",
+      "@type": "Class",
+      "title": "Stock",
+      "description": "Represents a stock.",
+      "supportedProperty": [
+        {
+          "@type": "SupportedProperty",
+          "title": "Stock symbol",
+          "required": true,
+          "readable": true,
+          "writable": false,
+          "property": {
+            "@id": "doc:Stock/symbol",
+            "range": "xsd:string"
+          }
+        },
+        {
+          "@type": "SupportedProperty",
+          "title": "Current price",
+          "description": "The current price of the stock.",
+          "required": true,
+          "readable": true,
+          "writable": true,
+          "property": {
+            "@id": "doc:Stock/currentPrice",
+            "range": "xsd:decimal"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "doc:User",
+      "@type": "Class",
+      "title": "User",
+      "description": "Represents a user.",
+      "supportedProperty": [
+        {
+          "@type": "SupportedProperty",
+          "title": "Full name",
+          "required": true,
+          "readable": true,
+          "writable": true,
+          "property": {
+            "@id": "doc:User/symbol",
+            "range": "xsd:string"
+          }
+        },
+        {
+          "@type": "SupportedProperty",
+          "title": "Username",
+          "required": true,
+          "readable": true,
+          "writable": false,
+          "property": {
+            "@id": "doc:User/username",
+            "range": "xsd:string"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "doc:StockCollection",
+      "@type": "Collection",
+      "title": "Stocks",
+      "description": "Stock listing",
+      "memberAssertion": {
+        "property": "rdf:type",
+        "object": "doc:Stock"
+      },
+      "supportedOperation": [
+        {
+          "@type": "Operation",
+          "title": "List stocks",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "@id": "doc:UserCollection",
+      "@type": "Collection",
+      "title": "Users",
+      "description": "A list of users",
+      "memberAssertion": {
+        "property": "rdf:type",
+        "object": "doc:User"
+      },
+      "supportedOperation": [
+        {
+          "@type": "Operation",
+          "title": "List users",
+          "method": "GET"
+        }
+      ]
+    }
+  ]
+}

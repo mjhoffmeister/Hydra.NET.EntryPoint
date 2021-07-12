@@ -1,0 +1,14 @@
+{
+  "@context": "https://api.example.com/doc#",
+  "@type": "EntryPoint",
+  "collection": [
+    {
+      "@id": "https://api.example.com/stocks",
+      "@type": "doc:StockCollection"
+    },
+    {
+      "@id": "https://api.example.com/users",
+      "@type": "doc:UserCollection"
+    }
+  ]
+}
