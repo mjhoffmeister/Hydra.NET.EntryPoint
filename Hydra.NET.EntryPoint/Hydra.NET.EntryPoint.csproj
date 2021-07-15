@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hydra.NET" Version="1.0.0-beta4" />
+    <PackageReference Include="Hydra.NET" Version="1.0.0-beta9" />
   </ItemGroup>
 
 </Project>

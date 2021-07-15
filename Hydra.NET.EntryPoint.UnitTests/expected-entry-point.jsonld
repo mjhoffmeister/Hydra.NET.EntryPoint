@@ -1,14 +1,27 @@
 {
-  "@context": "https://api.example.com/doc#",
-  "@type": "EntryPoint",
+  "@context": {
+    "doc": "https://api.example.com/doc#"
+  },
+  "@id": "https://api.example.com/",
+  "@type": "doc:EntryPoint",
   "collection": [
     {
       "@id": "https://api.example.com/stocks",
-      "@type": "doc:StockCollection"
+      "@type": "Collection",
+      "memberAssertion": {
+        "property": "doc:Stock",
+        "subject": "doc:StockCollection"
+      },
+      "member": []
     },
     {
       "@id": "https://api.example.com/users",
-      "@type": "doc:UserCollection"
+      "@type": "Collection",
+      "memberAssertion": {
+        "property": "doc:User",
+        "subject": "doc:UserCollection"
+      },
+      "member": []
     }
   ]
 }

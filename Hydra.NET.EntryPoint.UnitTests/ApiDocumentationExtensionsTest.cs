@@ -15,19 +15,17 @@ namespace Hydra.NET.EntryPoint.UnitTests
             string expectedJsonLD = File.ReadAllText(
                 "expected-api-documentation-with-entry-point.jsonld");
 
-
             var apiDocumentation = new ApiDocumentation(new Uri("https://api.example.com/doc"));
             apiDocumentation.Context.TryAddMapping("doc", new Uri("https://api.example.com/doc#"));
 
-            apiDocumentation
-                .AddSupportedClass<Stock>()
-                .AddSupportedClass<User>();
+            Uri entryPointUrl = new("https://api.example.com/");
 
             // Act
 
-            apiDocumentation.AddEntryPoint();
-
-            // Assert
+            apiDocumentation
+                .AddEntryPoint(entryPointUrl)
+                .AddSupportedClass<Stock>()
+                .AddSupportedClass<User>();
 
             string jsonLD = JsonSerializer.Serialize(apiDocumentation, new JsonSerializerOptions
             {

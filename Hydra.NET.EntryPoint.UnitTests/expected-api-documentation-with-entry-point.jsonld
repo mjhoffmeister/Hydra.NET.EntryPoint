@@ -9,8 +9,10 @@
     "Class": "hydra:Class",
     "Collection": "hydra:Collection",
     "description": "hydra:description",
+    "entrypoint": "hydra:entrypoint",
     "extension": "hydra:extension",
     "in": "sh:in",
+    "Link": "hydra:Link",
     "memberAssertion": "hydra:memberAssertion",
     "NodeShape": "sh:NodeShape",
     "object": "hydra:object",
@@ -42,7 +44,7 @@
       "supportedProperty": [
         {
           "@type": "SupportedProperty",
-          "title": "Collections",
+          "title": "Collection links",
           "description": "Lists links to initial collections on which a client can operate.",
           "required": true,
           "readable": true,
@@ -86,6 +88,16 @@
       ]
     },
     {
+      "@id": "doc:StockCollection",
+      "@type": "Collection",
+      "title": "Stocks",
+      "description": "Stock listing",
+      "memberAssertion": {
+        "property": "rdf:type",
+        "object": "doc:Stock"
+      }
+    },
+    {
       "@id": "doc:User",
       "@type": "Class",
       "title": "User",
@@ -98,7 +110,7 @@
           "readable": true,
           "writable": true,
           "property": {
-            "@id": "doc:User/symbol",
+            "@id": "doc:User/fullName",
             "range": "xsd:string"
           }
         },
@@ -116,23 +128,6 @@
       ]
     },
     {
-      "@id": "doc:StockCollection",
-      "@type": "Collection",
-      "title": "Stocks",
-      "description": "Stock listing",
-      "memberAssertion": {
-        "property": "rdf:type",
-        "object": "doc:Stock"
-      },
-      "supportedOperation": [
-        {
-          "@type": "Operation",
-          "title": "List stocks",
-          "method": "GET"
-        }
-      ]
-    },
-    {
       "@id": "doc:UserCollection",
       "@type": "Collection",
       "title": "Users",
@@ -140,14 +135,7 @@
       "memberAssertion": {
         "property": "rdf:type",
         "object": "doc:User"
-      },
-      "supportedOperation": [
-        {
-          "@type": "Operation",
-          "title": "List users",
-          "method": "GET"
-        }
-      ]
+      }
     }
   ]
 }

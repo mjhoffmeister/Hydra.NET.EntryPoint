@@ -8,14 +8,14 @@ namespace Hydra.NET.EntryPoint.UnitTests
     public class User
     {
         [JsonPropertyName("@id")]
-        public Uri Id { get; }
+        public Uri? Id { get; }
 
         [SupportedProperty(
             "doc:User/fullName",
             Xsd.String,
             Title = "Full name")]
         [JsonPropertyName("fullName")]
-        public string FullName { get; }
+        public string? FullName { get; }
 
         [SupportedProperty(
             "doc:User/username",
@@ -23,6 +23,6 @@ namespace Hydra.NET.EntryPoint.UnitTests
             Title = "Username",
             IsWritable = false)]
         [JsonPropertyName("username")]
-        public string Username { get; }
+        public string? Username { get; }
     }
 }
