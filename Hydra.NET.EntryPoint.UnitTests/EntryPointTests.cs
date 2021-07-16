@@ -15,15 +15,16 @@ namespace Hydra.NET.EntryPoint.UnitTests
 
             string expectedJsonLD = File.ReadAllText("expected-entry-point.jsonld");
 
-            Context entryPointContext = new(new Dictionary<string, Uri>()
-            {
-                { "doc", new("https://api.example.com/doc#") }
-            });
-
             var entryPoint = EntryPoint
-                .Create(entryPointContext, new Uri("https://api.example.com/"), "doc")
-                .AddCollection<Stock>(new Uri("https://api.example.com/stocks"))
-                .AddCollection<User>(new Uri("https://api.example.com/users"));
+                .Create("doc", new("https://api.example.com/doc#"), new("https://api.example.com/"))
+                .AddCollection(
+                    new Uri("https://api.example.com/stocks"),
+                    new Uri("doc:StockCollection"),
+                    IconHint.ShowChart)
+                .AddCollection(
+                    new Uri("https://api.example.com/users"),
+                    new Uri("doc:UserCollection"),
+                    IconHint.People);
 
             // Act
 

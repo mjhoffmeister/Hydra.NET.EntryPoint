@@ -57,6 +57,36 @@
       ]
     },
     {
+      "@id": "doc:EntryPointCollectionLink",
+      "@type": "Class",
+      "supportedProperty": [
+        {
+          "@type": "SupportedProperty",
+          "title": "Collection type",
+          "description": "The type of the collection.",
+          "required": true,
+          "readable": true,
+          "writable": false,
+          "property": {
+            "@id": "doc:EntryPoint/collectionType",
+            "range": "rdf:type"
+          }
+        },
+        {
+          "@type": "SupportedProperty",
+          "title": "Icon hint",
+          "description": "A hint for UI clients that support rendering icons.",
+          "required": false,
+          "readable": true,
+          "writable": false,
+          "property": {
+            "@id": "doc:EntryPoint/iconHint",
+            "range": "xsd:string"
+          }
+        }
+      ]
+    },
+    {
       "@id": "doc:Stock",
       "@type": "Class",
       "title": "Stock",

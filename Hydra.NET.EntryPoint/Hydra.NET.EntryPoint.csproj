@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.0.0-beta1</Version>
+    <Version>1.0.0-preview.1.2</Version>
     <PackageProjectUrl>https://github.com/mjhoffmeister/Hydra.NET.EntryPoint</PackageProjectUrl>
     <Authors>Matt Hoffmeister</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -11,10 +11,11 @@
       Hydra.NET.EntryPoint is a module for Hydra.NET that adds an entry point class for use in 
       hypermedia-driven Web APIs.
     </Description>
+    <UserSecretsId>3da3a39f-d304-4403-9522-50925337c89d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hydra.NET" Version="1.0.0-beta9" />
+    <PackageReference Include="Hydra.NET" Version="1.0.0-preview.1.10" />
   </ItemGroup>
 
 </Project>

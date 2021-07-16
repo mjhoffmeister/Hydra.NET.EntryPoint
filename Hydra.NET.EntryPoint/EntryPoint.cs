@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace Hydra.NET.EntryPoint
 {
-    [SupportedClass("doc:EntryPoint")]
+    [SupportedClass("EntryPoint")]
     public class EntryPoint
     {
         /// <summary>
@@ -14,8 +12,7 @@ namespace Hydra.NET.EntryPoint
         /// </summary>
         public EntryPoint() { }
 
-        private EntryPoint(Context context, Uri id, string type) =>
-            (Context, Id, Type) = (context, id, type);
+        private EntryPoint(Context context, Uri id) => (Context, Id) = (context, id);
         
         [JsonPropertyName("@context")]
         public Context? Context { get; set; }
@@ -24,60 +21,45 @@ namespace Hydra.NET.EntryPoint
         public Uri? Id { get; set; }
 
         [JsonPropertyName("@type")]
-        public string? Type { get; set;}
+        public string Type => "EntryPoint";
 
         [SupportedProperty(
-            "doc:EntryPoint/collection",
+            "EntryPoint/collection",
             "Link",
             Title = "Collection links",
             Description = "Lists links to initial collections on which a client can operate.",
             IsWritable = false)
         ]
         [JsonPropertyName("collection")]
-        public List<Collection<object>> Collections { get; set; } = new List<Collection<object>>();
+        public List<EntryPointCollectionLink> Collections { get; set; } = 
+            new List<EntryPointCollectionLink>();
 
         /// <summary>
         /// Creates a new entry point.
         /// </summary>
-        /// <param name="context">Context.</param>
-        /// <param name="id">Id.</param>
-        /// <returns><see cref="EntryPoint"/>.</returns>
-        /// <remarks>
-        /// This method will set @type to "EntryPoint" without a base URI or prefix.
-        /// </remarks>
-        public static EntryPoint Create(Context context, Uri id) => 
-            new EntryPoint(context, id, "EntryPoint");
-
-        /// <summary>
-        /// Creates a new entry point given the base URI of the EntryPoint type.
-        /// </summary>
-        /// <param name="context">Context.</param>
-        /// <param name="id">Id.</param>
-        /// <param name="typeBaseUri">
-        /// Base URI for the type. For example, providing the URI "https://api.example.com/doc#"
-        /// set @type to "https://api.example.com/doc#EntryPoint".
+        /// <param name="apiDocumentationContextPrefix">
+        /// Context prefix for the API's documentation.
         /// </param>
-        /// <returns><see cref="EntryPoint"/>.</returns>
-        public static EntryPoint Create(Context context, Uri id, Uri typeBaseUri)
-        {
-            string type = new Uri(typeBaseUri, "EntryPoint").ToString();
-            return new EntryPoint(context, id, type);
-        }
-
-        /// <summary>
-        /// Creates a new entry point given the prefix of the EntryPoint type.
-        /// </summary>
-        /// <param name="context">Context.</param>
-        /// <param name="id">Id.</param>
-        /// <param name="typePrefix">
-        /// Prefix for the type. For example, providing the prefix "doc" will set @type to 
-        /// "doc:EntryPoint".
+        /// <param name="apiDocumentationBaseUrl">
+        /// Base URL for the API's documentation, typically ending with a "#".
         /// </param>
-        /// <returns><see cref="EntryPoint"/>.</returns>
-        public static EntryPoint Create(Context context, Uri id, string typePrefix)
+        /// <param name="id">The entry point's id.</param>
+        /// <returns><see cref="EntryPoint"/></returns>
+        public static EntryPoint Create(
+            string apiDocumentationContextPrefix, Uri apiDocumentationBaseUrl, Uri id)
         {
-            string type = $"{typePrefix}:EntryPoint";
-            return new EntryPoint(context, id, type);
+            // Create the entry point's context
+            var context = new Context(new Dictionary<string, Uri>()
+            {
+                { apiDocumentationContextPrefix, apiDocumentationBaseUrl },
+                { "EntryPoint", new Uri($"{apiDocumentationContextPrefix}:EntryPoint") },
+                { 
+                    "EntryPointCollectionLink",
+                    new Uri($"{apiDocumentationContextPrefix}:EntryPointCollectionLink") 
+                }
+            });
+
+            return new EntryPoint(context, id);
         }
 
         /// <summary>
@@ -86,41 +68,9 @@ namespace Hydra.NET.EntryPoint
         /// <param name="collectionId">The id of the collection.</param>
         /// <param name="memberType">The type of the collection members.</param>
         /// <returns><see cref="EntryPoint"/>.</returns>
-        public EntryPoint AddCollection<T>(Uri collectionId)
+        public EntryPoint AddCollection(Uri id, Uri collectionType, string? iconHint = null)
         {
-            // Get the type of the class
-            Type type = typeof(T);
-
-            // Get the class's SupportedClassAttribute
-            SupportedClassAttribute? supportedClassAttribute =
-                type.GetCustomAttribute<SupportedClassAttribute>();
-
-            if (supportedClassAttribute == null)
-            {
-                throw new ArgumentException($"{type.Name} cannot be added to the entry point " +
-                    $"because it's not decorated with {nameof(SupportedClassAttribute)}.");
-            }
-
-            // Get the class's SupportedCollectionAttribute
-            SupportedCollectionAttribute? supportedCollectionAttribute =
-                type.GetCustomAttribute<SupportedCollectionAttribute>();
-
-            if (supportedClassAttribute == null)
-            {
-                throw new ArgumentException($"{type.Name} cannot be added to the entry point " +
-                    $"because it's not decorated with {nameof(SupportedCollectionAttribute)}.");
-            }
-
-            var noMembers = Enumerable.Empty<object>();
-
-            // Create a member assertion specifying the type of the collection
-            var memberAssertion = new MemberAssertion(
-                supportedClassAttribute.Id, subject: supportedCollectionAttribute.Id);
-
-            // Add the collection
-            Collections.Add(
-                new Collection<object>(null, collectionId, memberAssertion, noMembers));
-
+            Collections.Add(new EntryPointCollectionLink(id, collectionType, iconHint));
             return this;
         }
     }
