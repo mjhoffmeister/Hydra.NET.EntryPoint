@@ -6,10 +6,10 @@ Hydra.NET.EntryPoint is a module for Hydra.NET that adds an entry point class fo
 
 ### Entry point
 
-Hydra.NET.EntryPoint provides an `EntryPoint` class that advertises initial collections for clients to consume. A UI client could then use those collections to create links in a navigation bar.
+Hydra.NET.EntryPoint provides a `CollectionEntryPoint` class that advertises initial collections for clients to consume. A UI client could then use those collections to create links in a navigation component.
 
 ```csharp
-var entryPoint = EntryPoint
+var entryPoint = CollectionEntryPoint
     .Create("doc", new("https://api.example.com/doc#"), new("https://api.example.com/"))
     .AddCollection(
         new Uri("https://api.example.com/stocks"),
@@ -27,11 +27,11 @@ Given the `Stock` and `User` classes defined in the unit test project, the above
 {
   "@context": {
     "doc": "https://api.example.com/doc#",
-    "EntryPoint": "doc:EntryPoint",
+    "CollectionEntryPoint": "doc:CollectionEntryPoint",
     "EntryPointCollectionLink": "doc:EntryPointCollectionLink"
   },
   "@id": "https://api.example.com/",
-  "@type": "EntryPoint",
+  "@type": "CollectionEntryPoint",
   "collection": [
     {
       "@id": "https://api.example.com/stocks",
@@ -53,7 +53,7 @@ A UI client could look up the collection types in `ApiDocumentation` to do any r
 
 ### AddEntryPoint extension method
 
-The extension method `AddEntryPoint` is provided to add the `EntryPoint` class definition and entry point URL to `ApiDocumentation`.
+The extension method `AddEntryPoint` is provided to add the entry point class definitions and entry point URL to `ApiDocumentation`.
 
 ```csharp
 var apiDocumentation = new ApiDocumentation(

@@ -10,7 +10,7 @@ namespace Hydra.NET.EntryPoint
         {
             apiDocumentation.EntryPoint = entryPointUrl;
             return apiDocumentation
-                .AddSupportedClass<EntryPoint>()
+                .AddSupportedClass<CollectionEntryPoint>()
                 .AddSupportedClass<EntryPointCollectionLink>();
         }
             

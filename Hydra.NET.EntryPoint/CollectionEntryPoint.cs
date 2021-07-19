@@ -4,15 +4,16 @@ using System.Text.Json.Serialization;
 
 namespace Hydra.NET.EntryPoint
 {
-    [SupportedClass("EntryPoint")]
-    public class EntryPoint
+    [SupportedClass("CollectionEntryPoint")]
+    public class CollectionEntryPoint
     {
         /// <summary>
         /// Default constructor for deserialization.
         /// </summary>
-        public EntryPoint() { }
+        public CollectionEntryPoint() { }
 
-        private EntryPoint(Context context, Uri id) => (Context, Id) = (context, id);
+        private CollectionEntryPoint(Context context, Uri id) => 
+            (Context, Id) = (context, id);
         
         [JsonPropertyName("@context")]
         public Context? Context { get; set; }
@@ -21,11 +22,12 @@ namespace Hydra.NET.EntryPoint
         public Uri? Id { get; set; }
 
         [JsonPropertyName("@type")]
-        public string Type => "EntryPoint";
+        public string Type => "CollectionEntryPoint";
 
         [SupportedProperty(
-            "EntryPoint/collection",
-            "Link",
+            "CollectionEntryPoint/collection",
+            "EntryPointCollectionLink",
+            AddApiDocumentationPrefixToRange = true,
             Title = "Collection links",
             Description = "Lists links to initial collections on which a client can operate.",
             IsWritable = false)
@@ -44,22 +46,24 @@ namespace Hydra.NET.EntryPoint
         /// Base URL for the API's documentation, typically ending with a "#".
         /// </param>
         /// <param name="id">The entry point's id.</param>
-        /// <returns><see cref="EntryPoint"/></returns>
-        public static EntryPoint Create(
+        /// <returns><see cref="CollectionEntryPoint"/></returns>
+        public static CollectionEntryPoint Create(
             string apiDocumentationContextPrefix, Uri apiDocumentationBaseUrl, Uri id)
         {
             // Create the entry point's context
             var context = new Context(new Dictionary<string, Uri>()
             {
                 { apiDocumentationContextPrefix, apiDocumentationBaseUrl },
-                { "EntryPoint", new Uri($"{apiDocumentationContextPrefix}:EntryPoint") },
+                { 
+                    "CollectionEntryPoint",
+                    new Uri($"{apiDocumentationContextPrefix}:CollectionEntryPoint") },
                 { 
                     "EntryPointCollectionLink",
                     new Uri($"{apiDocumentationContextPrefix}:EntryPointCollectionLink") 
                 }
             });
 
-            return new EntryPoint(context, id);
+            return new CollectionEntryPoint(context, id);
         }
 
         /// <summary>
@@ -67,8 +71,9 @@ namespace Hydra.NET.EntryPoint
         /// </summary>
         /// <param name="collectionId">The id of the collection.</param>
         /// <param name="memberType">The type of the collection members.</param>
-        /// <returns><see cref="EntryPoint"/>.</returns>
-        public EntryPoint AddCollection(Uri id, Uri collectionType, string? iconHint = null)
+        /// <returns><see cref="CollectionEntryPoint"/>.</returns>
+        public CollectionEntryPoint AddCollection(
+            Uri id, Uri collectionType, string? iconHint = null)
         {
             Collections.Add(new EntryPointCollectionLink(id, collectionType, iconHint));
             return this;

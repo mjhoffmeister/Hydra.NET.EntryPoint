@@ -1,11 +1,11 @@
 {
   "@context": {
     "doc": "https://api.example.com/doc#",
-    "EntryPoint": "doc:EntryPoint",
+    "CollectionEntryPoint": "doc:CollectionEntryPoint",
     "EntryPointCollectionLink": "doc:EntryPointCollectionLink"
   },
   "@id": "https://api.example.com/",
-  "@type": "EntryPoint",
+  "@type": "CollectionEntryPoint",
   "collection": [
     {
       "@id": "https://api.example.com/stocks",

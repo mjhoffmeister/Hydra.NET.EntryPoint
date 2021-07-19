@@ -23,7 +23,7 @@ namespace Hydra.NET.EntryPoint
         public string Type => "EntryPointCollectionLink";
 
         [SupportedProperty(
-            "EntryPoint/collectionType",
+            "EntryPointCollectionLink/collectionType",
             Rdf.Type,
             Title = "Collection type",
             Description = "The type of the collection.",
@@ -33,7 +33,7 @@ namespace Hydra.NET.EntryPoint
         public Uri? CollectionType { get; set; }
 
         [SupportedProperty(
-            "EntryPoint/iconHint",
+            "EntryPointCollectionLink/iconHint",
             Xsd.String,
             Title = "Icon hint",
             Description = "A hint for UI clients that support rendering icons.",

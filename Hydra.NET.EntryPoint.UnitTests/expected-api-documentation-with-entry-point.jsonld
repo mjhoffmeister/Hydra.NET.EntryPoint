@@ -39,7 +39,7 @@
   "extension": "http://www.w3.org/ns/shacl#",
   "supportedClass": [
     {
-      "@id": "doc:EntryPoint",
+      "@id": "doc:CollectionEntryPoint",
       "@type": "Class",
       "supportedProperty": [
         {
@@ -50,8 +50,8 @@
           "readable": true,
           "writable": false,
           "property": {
-            "@id": "doc:EntryPoint/collection",
-            "range": "Link"
+            "@id": "doc:CollectionEntryPoint/collection",
+            "range": "doc:EntryPointCollectionLink"
           }
         }
       ]
@@ -68,7 +68,7 @@
           "readable": true,
           "writable": false,
           "property": {
-            "@id": "doc:EntryPoint/collectionType",
+            "@id": "doc:EntryPointCollectionLink/collectionType",
             "range": "rdf:type"
           }
         },
@@ -80,7 +80,7 @@
           "readable": true,
           "writable": false,
           "property": {
-            "@id": "doc:EntryPoint/iconHint",
+            "@id": "doc:EntryPointCollectionLink/iconHint",
             "range": "xsd:string"
           }
         }

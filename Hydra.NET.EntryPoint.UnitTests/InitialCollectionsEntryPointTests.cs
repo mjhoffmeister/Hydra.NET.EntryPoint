@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Hydra.NET.EntryPoint.UnitTests
 {
-    public static class EntryPointTests
+    public static class CollectionEntryPointTests
     {
         [Fact]
         public static void Serialize_WithStockAndUserCollections_ReturnsExpectedJsonLD()
@@ -15,7 +15,7 @@ namespace Hydra.NET.EntryPoint.UnitTests
 
             string expectedJsonLD = File.ReadAllText("expected-entry-point.jsonld");
 
-            var entryPoint = EntryPoint
+            var entryPoint = CollectionEntryPoint
                 .Create("doc", new("https://api.example.com/doc#"), new("https://api.example.com/"))
                 .AddCollection(
                     new Uri("https://api.example.com/stocks"),
