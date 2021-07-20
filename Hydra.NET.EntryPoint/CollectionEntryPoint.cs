@@ -12,8 +12,8 @@ namespace Hydra.NET.EntryPoint
         /// </summary>
         public CollectionEntryPoint() { }
 
-        private CollectionEntryPoint(Context context, Uri id) => 
-            (Context, Id) = (context, id);
+        private CollectionEntryPoint(Context context, Uri id, string title) => 
+            (Context, Id, Title) = (context, id, title);
         
         [JsonPropertyName("@context")]
         public Context? Context { get; set; }
@@ -23,6 +23,9 @@ namespace Hydra.NET.EntryPoint
 
         [JsonPropertyName("@type")]
         public string Type => "CollectionEntryPoint";
+
+        [JsonPropertyName("title")]
+        public string? Title { get; set; }
 
         [SupportedProperty(
             "CollectionEntryPoint/collection",
@@ -39,6 +42,7 @@ namespace Hydra.NET.EntryPoint
         /// <summary>
         /// Creates a new entry point.
         /// </summary>
+        /// <param name="title">The title of the app.</param>
         /// <param name="apiDocumentationContextPrefix">
         /// Context prefix for the API's documentation.
         /// </param>
@@ -48,7 +52,7 @@ namespace Hydra.NET.EntryPoint
         /// <param name="id">The entry point's id.</param>
         /// <returns><see cref="CollectionEntryPoint"/></returns>
         public static CollectionEntryPoint Create(
-            string apiDocumentationContextPrefix, Uri apiDocumentationBaseUrl, Uri id)
+            string title, string apiDocumentationContextPrefix, Uri apiDocumentationBaseUrl, Uri id)
         {
             // Create the entry point's context
             var context = new Context(new Dictionary<string, Uri>()
@@ -63,7 +67,7 @@ namespace Hydra.NET.EntryPoint
                 }
             });
 
-            return new CollectionEntryPoint(context, id);
+            return new CollectionEntryPoint(context, id, title);
         }
 
         /// <summary>

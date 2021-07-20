@@ -6,6 +6,7 @@
   },
   "@id": "https://api.example.com/",
   "@type": "CollectionEntryPoint",
+  "title": "Stocks app",
   "collection": [
     {
       "@id": "https://api.example.com/stocks",
