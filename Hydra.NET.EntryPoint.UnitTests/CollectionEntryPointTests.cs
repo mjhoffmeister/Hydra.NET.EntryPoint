@@ -19,7 +19,7 @@ namespace Hydra.NET.EntryPoint.UnitTests
                 .Create(
                     "Stocks app",
                     "doc",
-                    new("https://api.example.com/doc#"),
+                    new("https://api.example.com/doc"),
                     new("https://api.example.com/"))
                 .AddCollection(
                     new Uri("https://api.example.com/stocks"),

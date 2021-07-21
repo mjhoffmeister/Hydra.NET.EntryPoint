@@ -10,15 +10,19 @@ Hydra.NET.EntryPoint provides a `CollectionEntryPoint` class that advertises ini
 
 ```csharp
 var entryPoint = CollectionEntryPoint
-    .Create("doc", new("https://api.example.com/doc#"), new("https://api.example.com/"))
-    .AddCollection(
-        new Uri("https://api.example.com/stocks"),
-        new Uri("doc:StockCollection"),
-        IconHint.ShowChart)
-    .AddCollection(
-        new Uri("https://api.example.com/users"),
-        new Uri("doc:UserCollection"),
-        IconHint.People);
+  .Create(
+      "Stocks app",
+      "doc",
+      new("https://api.example.com/doc"),
+      new("https://api.example.com/"))
+  .AddCollection(
+      new Uri("https://api.example.com/stocks"),
+      new Uri("doc:StockCollection"),
+      IconHint.ShowChart)
+  .AddCollection(
+      new Uri("https://api.example.com/users"),
+      new Uri("doc:UserCollection"),
+      IconHint.People);
 ```
 
 Given the `Stock` and `User` classes defined in the unit test project, the above example will generate the following JSON-LD when serialized.
@@ -27,11 +31,14 @@ Given the `Stock` and `User` classes defined in the unit test project, the above
 {
   "@context": {
     "doc": "https://api.example.com/doc#",
+    "apiDocumentation": "http://www.w3.org/ns/hydra/core#apiDocumentation",
     "CollectionEntryPoint": "doc:CollectionEntryPoint",
     "EntryPointCollectionLink": "doc:EntryPointCollectionLink"
   },
   "@id": "https://api.example.com/",
   "@type": "CollectionEntryPoint",
+  "apiDocumentation": "https://api.example.com/doc",
+  "title": "Stocks app",
   "collection": [
     {
       "@id": "https://api.example.com/stocks",

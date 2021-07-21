@@ -12,8 +12,10 @@ namespace Hydra.NET.EntryPoint
         /// </summary>
         public CollectionEntryPoint() { }
 
-        private CollectionEntryPoint(Context context, Uri id, string title) => 
-            (Context, Id, Title) = (context, id, title);
+        private CollectionEntryPoint(Context context, Uri id, string title, Uri apiDocumentationUrl)
+        {
+            (Context, Id, Title, ApiDocumentation) = (context, id, title, apiDocumentationUrl);
+        }
         
         [JsonPropertyName("@context")]
         public Context? Context { get; set; }
@@ -23,6 +25,9 @@ namespace Hydra.NET.EntryPoint
 
         [JsonPropertyName("@type")]
         public string Type => "CollectionEntryPoint";
+
+        [JsonPropertyName("apiDocumentation")]
+        public Uri? ApiDocumentation { get; set; }
 
         [JsonPropertyName("title")]
         public string? Title { get; set; }
@@ -52,12 +57,13 @@ namespace Hydra.NET.EntryPoint
         /// <param name="id">The entry point's id.</param>
         /// <returns><see cref="CollectionEntryPoint"/></returns>
         public static CollectionEntryPoint Create(
-            string title, string apiDocumentationContextPrefix, Uri apiDocumentationBaseUrl, Uri id)
+            string title, string apiDocumentationContextPrefix, Uri apiDocumentationUrl, Uri id)
         {
             // Create the entry point's context
             var context = new Context(new Dictionary<string, Uri>()
             {
-                { apiDocumentationContextPrefix, apiDocumentationBaseUrl },
+                { apiDocumentationContextPrefix, new Uri(apiDocumentationUrl, "#") },
+                { "apiDocumentation", new Uri("http://www.w3.org/ns/hydra/core#apiDocumentation") },
                 { 
                     "CollectionEntryPoint",
                     new Uri($"{apiDocumentationContextPrefix}:CollectionEntryPoint") },
@@ -67,7 +73,7 @@ namespace Hydra.NET.EntryPoint
                 }
             });
 
-            return new CollectionEntryPoint(context, id, title);
+            return new CollectionEntryPoint(context, id, title, apiDocumentationUrl);
         }
 
         /// <summary>
