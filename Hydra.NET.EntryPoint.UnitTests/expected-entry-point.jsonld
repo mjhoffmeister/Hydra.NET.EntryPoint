@@ -1,11 +1,13 @@
 {
   "@context": {
     "doc": "https://api.example.com/doc#",
+    "apiDocumentation": "http://www.w3.org/ns/hydra/core#apiDocumentation",
     "CollectionEntryPoint": "doc:CollectionEntryPoint",
     "EntryPointCollectionLink": "doc:EntryPointCollectionLink"
   },
   "@id": "https://api.example.com/",
   "@type": "CollectionEntryPoint",
+  "apiDocumentation": "https://api.example.com/doc",
   "title": "Stocks app",
   "collection": [
     {
